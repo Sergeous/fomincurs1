@@ -6,14 +6,14 @@ app = Flask(__name__)
 @app.route('/') 
 def index(): 
 	# Connect to the database 
-	conn = psycopg2.connect(database="VideoGameSiteDB", user="postgres", 
-						password="password", host="172.16.0.14", port="5432")  
+	conn = psycopg2.connect(database="ElectronicLibraryDb", user="postgres", 
+						password="password", host="172.16.0.13", port="5432")  
 
 	# create a cursor 
 	cur = conn.cursor() 
 
 	# Select all products from the table 
-	cur.execute('''SELECT * FROM Games''') 
+	cur.execute('''SELECT * FROM books''') 
 
 	# Fetch the data 
 	data = cur.fetchall() 
@@ -27,22 +27,21 @@ def index():
 
 @app.route('/create', methods=['POST']) 
 def create(): 
-	conn = psycopg2.connect(database="VideoGameSiteDB", user="postgres", 
-						password="password", host="172.16.0.14", port="5432") 
+	conn = psycopg2.connect(database="ElectronicLibraryDb", user="postgres", 
+						password="password", host="172.16.0.13", port="5432") 
 
 	cur = conn.cursor() 
 
 	# Get the data from the form 
 	title = request.form['title'] 
-	genre_id = request.form['genre_id']
-	release_year = request.form['release_year'] 
-	rating = request.form['rating']  
+	author = request.form['author']
+	genre = request.form['genre'] 
+	publication_year = request.form['publication_year']  
 
 	# Insert the data into the table 
 	cur.execute( 
-		'''INSERT INTO Games \ 
-		(name, price) VALUES (%s, %s, %s, %s)''', 
-		(title, genre_id, release_year, rating)) 
+		'''INSERT INTO books (title, author, genre, publication_year) VALUES (%s, %s, %s, %s)''', 
+		(title, author, genre, publication_year)) 
 
 	# commit the changes 
 	conn.commit() 
@@ -56,23 +55,22 @@ def create():
 
 @app.route('/update', methods=['POST']) 
 def update(): 
-	conn = psycopg2.connect(database="VideoGameSiteDB", user="postgres", 
-						password="password", host="172.16.0.14", port="5432") 
+	conn = psycopg2.connect(database="ElectronicLibraryDb", user="postgres", 
+						password="password", host="172.16.0.13", port="5432") 
 
 	cur = conn.cursor() 
 
 	# Get the data from the form 
 
-	id = request.form['id']
+	book_id = request.form['book_id']
 	title = request.form['title'] 
-	genre_id = request.form['genre_id']
-	release_year = request.form['release_year'] 
-	rating = request.form['rating']  
+	author = request.form['author']
+	genre = request.form['genre'] 
+	publication_year = request.form['publication_year']  
 
 	# Update the data in the table 
 	cur.execute( 
-		'''UPDATE Games SET title=%s,\ 
-		genre_id=%s, release_year=%s, rating=%s WHERE id=%s''', (title, genre_id, release_year, rating, id)) 
+		'''UPDATE books SET title=%s, author=%s, genre=%s, publication_year=%s WHERE id=%s''', (title, author, genre, publication_year)) 
 
 	# commit the changes 
 	conn.commit() 
@@ -81,15 +79,15 @@ def update():
 
 @app.route('/delete', methods=['POST']) 
 def delete(): 
-	conn = psycopg2.connect(database="VideoGameSiteDB", user="postgres", 
-						password="password", host="172.16.0.14", port="5432") 
+	conn = psycopg2.connect(database="ElectronicLibraryDb", user="postgres", 
+						password="password", host="172.16.0.13", port="5432") 
 	cur = conn.cursor() 
 
 	# Get the data from the form 
-	id = request.form['id'] 
+	book_id = request.form['book_id'] 
 
 	# Delete the data from the table 
-	cur.execute('''DELETE FROM Games WHERE id=%s''', (id,)) 
+	cur.execute('''DELETE FROM books WHERE id=%s''', (book_id)) 
 
 	# commit the changes 
 	conn.commit() 
