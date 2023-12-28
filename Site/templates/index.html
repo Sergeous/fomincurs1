@@ -1,17 +1,17 @@
 <html> 
 <head> 
-	<title>Таблица игр</title> 
+	<title>Список книженций</title> 
 </head> 
 <body> 
-	<h1>Игры</h1> 
+	<h1>Книги</h1> 
 	<table> 
 	<thead> 
 		<tr> 
 		<th>ID</th> 
 		<th>Название</th> 
-		<th>Ид жанра</th>
-		<th>Год выпуска</th> 
-		<th>Рейтинг</th>  
+		<th>Автор</th>
+		<th>Жанр</th> 
+		<th>Год публикации</th>  
 		<th>Actions</th> 
 		</tr> 
 	</thead> 
@@ -25,15 +25,15 @@
 		<td>{{ row[4] }}</td>  
 		<td> 
 			<form action="/update" method="post"> 
-			<input type="hidden" name="id" value="{{ row[0] }}"> 
+			<input type="hidden" name="book_id" value="{{ row[0] }}"> 
 			<input type="text" name="title" value="{{ row[1] }}"> 
-			<input type="text" name="genre_id" value="{{ row[2] }}">
-			<input type="text" name="release_year" value="{{ row[3] }}"> 
-			<input type="text" name="rating" value="{{ row[4] }}">  
+			<input type="text" name="author" value="{{ row[2] }}">
+			<input type="text" name="genre" value="{{ row[3] }}"> 
+			<input type="text" name="publication_year" value="{{ row[4] }}">  
 			<input type="submit" value="Update"> 
 			</form> 
 			<form action="/delete" method="post"> 
-			<input type="hidden" name="id" value="{{ row[0] }}"> 
+			<input type="hidden" name="book_id" value="{{ row[0] }}"> 
 			<input type="submit" value="Delete"> 
 			</form> 
 		</td> 
@@ -41,12 +41,12 @@
 		{% endfor %} 
 	</tbody> 
 	</table> 
-	<h2>Добавить новую таблицу</h2> 
+	<h2>Добавить новую запись</h2> 
 	<form action="/create" method="post"> 
 	<input type="text" name="title" placeholder="title"> 
-	<input type="text" name="genre_id" placeholder="genre_id">
-	<input type="text" name="release_year" placeholder="release_year"> 
-	<input type="text" name="rating" placeholder="rating">  
+	<input type="text" name="author" placeholder="author">
+	<input type="text" name="genre" placeholder="genre"> 
+	<input type="text" name="publication_year" placeholder="publication_year">  
 	<input type="submit" value="Create"> 
 	</form> 
 </body> 
